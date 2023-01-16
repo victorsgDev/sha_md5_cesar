@@ -6,11 +6,13 @@ import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @FunctionalInterface
 public interface Mda5CodeApi {
-    String cifrar(String[] args);
+    String cifrar(String[] datos);
 
     static Mda5CodeApi runCifrar() {
         FileOutputStream file;
@@ -24,9 +26,9 @@ public interface Mda5CodeApi {
         }
 
         ObjectOutputStream finalBuffer = buffer;
-        return args -> {
-
-            Arrays.stream(args).forEach(
+        return datos -> {
+            List<String> datosEncrypt = new ArrayList<>();
+            Arrays.stream(datos).forEach(
                     arg -> {
                         try {
                             // Encriptamos el argumento
@@ -37,13 +39,7 @@ public interface Mda5CodeApi {
                             while (hashtext.length() < 32) {
                                 hashtext = "0" + hashtext;
                             }
-                            String finalHashtext = hashtext;
-                            try {
-                                assert finalBuffer != null;
-                                finalBuffer.writeObject(finalHashtext);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+                            datosEncrypt.add(hashtext);
 
                         } catch (NoSuchAlgorithmException e) {
                             throw new RuntimeException(e);
@@ -51,6 +47,14 @@ public interface Mda5CodeApi {
 
                     }
             );
+
+            Datos data = new Datos(datosEncrypt.get(0), datosEncrypt.get(1));
+            try {
+                assert finalBuffer != null;
+                finalBuffer.writeObject(data);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             return "Cifrado realizado correctamente";
         };
