@@ -1,12 +1,16 @@
 package org.example;
 
-import org.example.cifrado_cesar.CesarEncrypter;
-import org.example.cifrado_mda5.Mda5CodeApi;
 import org.example.encrypter.EncrypterApi;
 
 import java.util.Scanner;
 
 public class Main {
+
+    /*
+    Contraseña = mypassword
+    Correo = myuser@gmail.com
+     */
+
     public static void main(String[] args) {
         var scanner = new Scanner(System.in);
         System.out.println("""
@@ -31,9 +35,7 @@ public class Main {
                 var correo = scanner.nextLine();
                 System.out.println("Ingrese la contraseña");
                 var password = scanner.nextLine();
-                var datos = new String[]{correo, password};
-                var resultado = Mda5CodeApi.runCifrar().cifrar(datos);
-                System.out.println(resultado);
+                System.out.println(EncrypterApi.shaEncrypter().encrypt(correo, password));
             }
             case "3" -> System.out.println("Has seleccionado la tercera opción");
 
