@@ -13,7 +13,8 @@ public class Main {
                 ¿Qué tipo de cifrado desea utilizar?
                 1. Cifrado Cesar
                 2. Cifrado MD5
-                3. Cifrado SHA
+                3. Iniciar Sesión MD5
+                4. Cifrado SHA
                  """);
         var opcion = scanner.nextLine();
 
