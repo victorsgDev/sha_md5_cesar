@@ -45,7 +45,8 @@ public interface EncrypterApi {
                                         sb.append(String.format("%02x", b));
                                     }
                                     return sb.toString();
-                                }).toList();
+                                })
+                                .toList();
 
                 var path = Paths.get("src/main/resources/hashed_data.txt");
                 var lines = Files.lines(path).toList();
@@ -58,6 +59,5 @@ public interface EncrypterApi {
                 throw new RuntimeException(e);
             }
         };
-
     }
 }
