@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.cifrado_cesar.CesarEncrypter;
 import org.example.cifrado_mda5.Mda5CodeApi;
+import org.example.encrypter.EncrypterApi;
 
 import java.util.Scanner;
 
@@ -18,10 +19,11 @@ public class Main {
 
         switch (opcion) {
             case "1" -> {
-                System.out.println("Ingrese la palabra a cifrar");
-                var palabra = scanner.nextLine();
-                var cifradoCesar = CesarEncrypter.start().encrypt(palabra);
-                System.out.println("La palabra cifrada es: " + cifradoCesar);
+                System.out.println("Ingrese el correo");
+                var correo = scanner.nextLine();
+                System.out.println("Ingrese la contraseña");
+                var password = scanner.nextLine();
+                System.out.println(EncrypterApi.cesarEncrypter().encrypt(correo, password));
             }
             case "2" -> {
                 System.out.println("Ingrese el correo");
