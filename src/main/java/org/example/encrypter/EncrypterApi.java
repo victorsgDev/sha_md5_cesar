@@ -1,5 +1,7 @@
 package org.example.encrypter;
 
+import org.example.entities.Data;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -78,7 +80,7 @@ public interface EncrypterApi {
 
     }
 
-    static EncrypterApi runCifrar() {
+    static EncrypterApi md5Encrypter() {
         FileOutputStream file;
         ObjectOutputStream buffer = null;
         try {
