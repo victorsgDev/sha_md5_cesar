@@ -34,6 +34,7 @@ public interface EncrypterApi {
                             palabraCifrada.append(abecedario[Arrays.asList(abecedario).indexOf(letraAbecedario) + 3]);
                         }
                     });
+
             Arrays.stream(palabraSplit)
                     .forEach(cambiarCaracter);
         };
