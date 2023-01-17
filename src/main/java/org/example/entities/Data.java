@@ -1,4 +1,7 @@
 package org.example.entities;
 
-public record Data(String email, String password) {
+import java.io.Serializable;
+
+public record Data(String email, String password) implements Serializable {
+
 }

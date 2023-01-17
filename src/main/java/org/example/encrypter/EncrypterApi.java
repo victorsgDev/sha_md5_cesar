@@ -35,6 +35,7 @@ public interface EncrypterApi {
                             palabraCifrada.append(abecedario[Arrays.asList(abecedario).indexOf(letraAbecedario) + 3]);
                         }
                     });
+
             Arrays.stream(palabraSplit)
                     .forEach(cambiarCaracter);
         };
@@ -80,7 +81,7 @@ public interface EncrypterApi {
 
     }
 
-    static EncrypterApi md5Encrypter() {
+    static EncrypterApi Md5Encrypter() {
         FileOutputStream file;
         ObjectOutputStream buffer = null;
         try {
@@ -93,7 +94,10 @@ public interface EncrypterApi {
 
         ObjectOutputStream finalBuffer = buffer;
         return (email, password) -> {
-            List<String> datos = new ArrayList<>(){{add(email); add(password);}};
+            List<String> datos = new ArrayList<>() {{
+                add(email);
+                add(password);
+            }};
             List<String> datosEncrypt = new ArrayList<>();
             datos.forEach(
                     arg -> {
@@ -122,7 +126,6 @@ public interface EncrypterApi {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return "Cifrado realizado correctamente";
         };
     }
