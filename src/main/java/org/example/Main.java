@@ -38,7 +38,14 @@ public class Main {
                 var resultado = EncrypterApi.shaEncrypter().encrypt(correo, password);
                 System.out.println(resultado);
             }
-            case "3" -> System.out.println("Has seleccionado la tercera opción");
+            case "3" -> {
+                System.out.println("Ingrese el correo");
+                var correo = scanner.nextLine();
+                System.out.println("Ingrese la contraseña");
+                var password = scanner.nextLine();
+                var resultado = EncrypterApi.Md5Encrypter().encrypt(correo, password);
+                System.out.println(resultado);
+            }
 
             default -> System.out.println("Opción no válida");
         }

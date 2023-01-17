@@ -3,6 +3,7 @@ package org.example.encrypter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serial;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -78,7 +79,7 @@ public interface EncrypterApi {
 
     }
 
-    static EncrypterApi runCifrar() {
+    static EncrypterApi Md5Encrypter() {
         FileOutputStream file;
         ObjectOutputStream buffer = null;
         try {
@@ -91,7 +92,10 @@ public interface EncrypterApi {
 
         ObjectOutputStream finalBuffer = buffer;
         return (email, password) -> {
-            List<String> datos = new ArrayList<>(){{add(email); add(password);}};
+            List<String> datos = new ArrayList<>() {{
+                add(email);
+                add(password);
+            }};
             List<String> datosEncrypt = new ArrayList<>();
             datos.forEach(
                     arg -> {
@@ -120,7 +124,6 @@ public interface EncrypterApi {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return "Cifrado realizado correctamente";
         };
     }
