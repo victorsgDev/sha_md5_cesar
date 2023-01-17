@@ -1,4 +1,4 @@
-package org.example.encrypter;
+package org.example.entities;
 
 import java.io.Serializable;
 
