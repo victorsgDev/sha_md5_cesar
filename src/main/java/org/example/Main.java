@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.desencripter.AuthApi;
 import org.example.encrypter.EncrypterApi;
 
 import java.util.Scanner;
@@ -16,8 +17,9 @@ public class Main {
         System.out.println("""
                 ¿Qué tipo de cifrado desea utilizar?
                 1. Cifrado Cesar
-                2. Cifrado SHA-256
-                3. Cifrado MD5
+                2. Iniciar sesión con cifrado SHA-256
+                3. Registrarse MD5
+                4. Iniciar sesión con cifrado MD5
                  """);
         var opcion = scanner.nextLine();
 
@@ -43,8 +45,20 @@ public class Main {
                 var correo = scanner.nextLine();
                 System.out.println("Ingrese la contraseña");
                 var password = scanner.nextLine();
-                var resultado = EncrypterApi.Md5Encrypter().encrypt(correo, password);
-                System.out.println(resultado);
+                EncrypterApi.Md5Encrypter().encrypt(correo, password);
+            }
+
+            case "4" -> {
+                System.out.println("Ingrese el correo");
+                var correo = scanner.nextLine();
+                System.out.println("Ingrese la contraseña");
+                var password = scanner.nextLine();
+                var resultado = AuthApi.loginMd5().auth(correo, password);
+                if (resultado) {
+                    System.out.println("Credenciales correctas");
+                } else {
+                    System.out.println("Usuario o contraseña incorrectos");
+                }
             }
 
             default -> System.out.println("Opción no válida");
