@@ -82,9 +82,11 @@ public interface EncrypterApi {
     }
 
     static EncrypterApi Md5Encrypter() {
+        // Creamos el iniciador y el filtro para trabajar con nuestro .dat
         FileOutputStream file;
         ObjectOutputStream buffer = null;
         try {
+            // Instanciamos ambos
             file = new FileOutputStream("src/main/resources/fichero_cifrado.dat");
             buffer = new ObjectOutputStream(file);
         } catch (IOException e) {
