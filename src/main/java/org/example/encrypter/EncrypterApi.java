@@ -48,35 +48,53 @@ public interface EncrypterApi {
     }
 
     static EncrypterApi shaEncrypter() {
+        // Creamos el iniciador y el filtro para trabajar con nuestro .dat
+        FileOutputStream file;
+        ObjectOutputStream buffer = null;
+        try {
+            // Instanciamos ambos
+            file = new FileOutputStream("src/main/resources/hashed_data.dat");
+            buffer = new ObjectOutputStream(file);
+        } catch (IOException e) {
+            System.out.println("No se puede abrir el fichero");
+            System.out.println(e.getMessage());
+        }
+
+        ObjectOutputStream finalBuffer = buffer;
         return (email, password) -> {
-            try {
-                var md = MessageDigest.getInstance("SHA-256");
+            List<String> datos = new ArrayList<>() {{
+                add(email);
+                add(password);
+            }};
+            List<String> datosEncrypt = new ArrayList<>();
+            datos.forEach(
+                    arg -> {
+                        try {
+                            // Encriptamos el argumento
+                            MessageDigest md = MessageDigest.getInstance("SHA-256");
+                            byte[] messageDigest = md.digest(arg.getBytes());
+                            BigInteger no = new BigInteger(1, messageDigest);
+                            String hashtext = no.toString(16); //texto encriptado
+                            while (hashtext.length() < 32) {
+                                hashtext = "0" + hashtext;
+                            }
+                            datosEncrypt.add(hashtext);
 
-                Function<String, byte[]> getBytes = palabra -> md.digest(palabra.getBytes(StandardCharsets.UTF_8));
+                        } catch (NoSuchAlgorithmException e) {
+                            throw new RuntimeException(e);
+                        }
 
-                Function<byte[], String> bytesToString = bytes -> {
-                    var sb = new StringBuilder();
-                    for (byte b : bytes) {
-                        sb.append(String.format("%02x", b));
                     }
-                    return sb.toString();
-                };
+            );
 
-                var datosEncriptados =
-                        Stream.of(email, password)
-                                .map(getBytes.andThen(bytesToString))
-                                .toList();
-
-                var path = Paths.get("src/main/resources/hashed_data.txt");
-                var lines = Files.lines(path).toList();
-                if (datosEncriptados.get(0).equals(lines.get(0)) && datosEncriptados.get(1).equals(lines.get(1))) {
-                    return "Acceso permitido";
-                } else {
-                    return "Acceso denegado";
-                }
-            } catch (NoSuchAlgorithmException | IOException e) {
-                throw new RuntimeException(e);
+            Data data = new Data(datosEncrypt.get(0), datosEncrypt.get(1));
+            try {
+                assert finalBuffer != null;
+                finalBuffer.writeObject(data);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            return "Cifrado realizado correctamente";
         };
 
     }
