@@ -17,9 +17,10 @@ public class Main {
         System.out.println("""
                 ¿Qué tipo de cifrado desea utilizar?
                 1. Cifrado Cesar
-                2. Iniciar sesión con cifrado SHA-256
-                3. Registrarse MD5
-                4. Iniciar sesión con cifrado MD5
+                2. Registrarse SHA-256
+                3. Iniciar sesión con cifrado SHA-256
+                4. Registrarse MD5
+                5. Iniciar sesión con cifrado MD5
                  """);
         var opcion = scanner.nextLine();
 
@@ -37,10 +38,21 @@ public class Main {
                 var correo = scanner.nextLine();
                 System.out.println("Ingrese la contraseña");
                 var password = scanner.nextLine();
-                var resultado = EncrypterApi.shaEncrypter().encrypt(correo, password);
-                System.out.println(resultado);
+                EncrypterApi.shaEncrypter().encrypt(correo, password);
             }
             case "3" -> {
+                System.out.println("Ingrese el correo");
+                var correo = scanner.nextLine();
+                System.out.println("Ingrese la contraseña");
+                var password = scanner.nextLine();
+                var resultado = AuthApi.loginSha().auth(correo, password);
+                if (resultado) {
+                    System.out.println("Credenciales correctas");
+                } else {
+                    System.out.println("Usuario o contraseña incorrectos");
+                }
+            }
+            case "4" -> {
                 System.out.println("Ingrese el correo");
                 var correo = scanner.nextLine();
                 System.out.println("Ingrese la contraseña");
@@ -48,7 +60,7 @@ public class Main {
                 EncrypterApi.Md5Encrypter().encrypt(correo, password);
             }
 
-            case "4" -> {
+            case "5" -> {
                 System.out.println("Ingrese el correo");
                 var correo = scanner.nextLine();
                 System.out.println("Ingrese la contraseña");
